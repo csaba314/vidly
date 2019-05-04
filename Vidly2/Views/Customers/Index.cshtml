@@ -9,7 +9,7 @@
     <thead>
         <tr>
             <th><h3>Customers</h3></th>
-            <th><h3>Membership Type</h3></th>
+            <th><h3>Discount Rate</h3></th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
             <td>
                 @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)
             <td style="text-align:center">
-                @customer.MembershipTypeId
+                @customer.MembershipType.DiscountRate%
             </td>
             </td>
         </tr> 
