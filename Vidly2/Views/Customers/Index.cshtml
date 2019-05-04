@@ -1,0 +1,28 @@
+﻿@model List<Vidly2.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered table-hover" >
+    <thead>
+        <tr>
+            <th><h3>Customers</h3></th>
+            <th><h3>Membership Type</h3></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+        <tr>
+            <td>
+                @Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)
+            <td style="text-align:center">
+                @customer.MembershipTypeId
+            </td>
+            </td>
+        </tr> 
+        }
+    </tbody>
+</table>
