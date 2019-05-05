@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Vidly2.Models;
 using System.Data.Entity;
+using Vidly2.ViewModels;
 
 namespace Vidly2.Controllers
 {
@@ -24,14 +25,24 @@ namespace Vidly2.Controllers
 
         public ActionResult New()
         {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = membershipTypes
+            };
 
-            return View();
+            return View(viewModel);
         }
 
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult Create(Customer customer)
         {
 
-            return View();
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Index", "Customers");
         }
 
         // GET: Customers
