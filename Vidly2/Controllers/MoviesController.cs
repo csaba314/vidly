@@ -7,6 +7,7 @@ using Vidly2.Models;
 using Vidly2.ViewModels;
 using System.Data.Entity;
 using Vidly2.ViewModels;
+using System.Data.Entity.Validation;
 
 namespace Vidly2.Controllers
 {
@@ -55,6 +56,36 @@ namespace Vidly2.Controllers
             
             return View("MovieForm", viewModel);
 
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+
+                Console.WriteLine(e);
+            }
+
+            return RedirectToAction("Index", "Movies");
         }
 
 
