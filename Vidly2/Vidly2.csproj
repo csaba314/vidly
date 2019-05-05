@@ -219,6 +219,14 @@
     <Compile Include="Migrations\201905051415547_seedingDataToGenreTable.Designer.cs">
       <DependentUpon>201905051415547_seedingDataToGenreTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905051734182_updateMembershipTypeData.cs" />
+    <Compile Include="Migrations\201905051734182_updateMembershipTypeData.Designer.cs">
+      <DependentUpon>201905051734182_updateMembershipTypeData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905051737082_updateMembershipTypeData1.cs" />
+    <Compile Include="Migrations\201905051737082_updateMembershipTypeData1.Designer.cs">
+      <DependentUpon>201905051737082_updateMembershipTypeData1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -345,6 +353,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905051415547_seedingDataToGenreTable.resx">
       <DependentUpon>201905051415547_seedingDataToGenreTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905051734182_updateMembershipTypeData.resx">
+      <DependentUpon>201905051734182_updateMembershipTypeData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905051737082_updateMembershipTypeData1.resx">
+      <DependentUpon>201905051737082_updateMembershipTypeData1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
