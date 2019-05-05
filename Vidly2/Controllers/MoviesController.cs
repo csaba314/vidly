@@ -24,7 +24,7 @@ namespace Vidly2.Controllers
             _context.Dispose();
         }
 
-        public ActionResult index()
+        public ActionResult Index()
         {
 
             var movies = _context.Movies.Include(m => m.Genre).ToList();
