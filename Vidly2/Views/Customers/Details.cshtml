@@ -9,7 +9,11 @@
 
 <ul>
     <li>ID: @Model.Id</li>
-    <li>Membership type: @Model.MembershipTypeId </li>
+    @if (Model.BirthDate.HasValue)
+    {
+        <li>Bitrh date: @Model.BirthDate.Value.ToShortDateString()</li>
+    }
+    <li>Membership type: @Model.MembershipType.Name</li>
     <li>Is subscribed: @Model.IsSubscribedToNewsletter </li>
 </ul>
 
