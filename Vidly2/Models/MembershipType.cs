@@ -18,5 +18,14 @@ namespace Vidly2.Models
         public int DurationInMonths { get; set; }
 
         public int DiscountRate { get; set; }
+
+        public static readonly int Unknown = 0;
+        public static readonly int PayAsYouGo = 1;
+        /*
+         Id = 2 => Monthly
+         Id = 3 => Quaterly
+         Id = 4 => Annually
+         
+         */
     }
 }
