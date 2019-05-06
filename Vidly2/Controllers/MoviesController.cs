@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Vidly2.Models;
 using Vidly2.ViewModels;
 using System.Data.Entity;
-using Vidly2.ViewModels;
 using System.Data.Entity.Validation;
 
 namespace Vidly2.Controllers
@@ -124,11 +123,5 @@ namespace Vidly2.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Edit(int id)
-        {
-            return Content("id=" + id);
-        }
-
-        
     }
 } 
