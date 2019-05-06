@@ -49,6 +49,7 @@ namespace Vidly2.Controllers
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
+
             var viewModel = new MovieFormViewModel
             {
                 Genres = genres
@@ -75,17 +76,26 @@ namespace Vidly2.Controllers
                 movieInDb.NumberInStock = movie.NumberInStock;
             }
 
-            try
-            {
                 _context.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-
-                Console.WriteLine(e);
-            }
-
+            
             return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new MovieFormViewModel
+            {
+                Genres = _context.Genres.ToList(),
+                Movie = movie
+            };
+
+            return View("MovieForm", viewModel);
         }
 
 
