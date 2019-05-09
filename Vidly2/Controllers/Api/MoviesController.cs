@@ -77,9 +77,10 @@ namespace Vidly2.Controllers.Api
             }
 
             Mapper.Map(movieDto, movieInDb);
+
             _context.SaveChanges();
 
-            return Ok(movieDto);
+            return Ok();
         }
 
         // DELETE /api/movies/1
