@@ -19,7 +19,7 @@ namespace Vidly2.ViewModels
 
         [Required]
         [Display(Name = "Genre")]
-        public int GenreId { get; set; }
+        public int? GenreId { get; set; }
 
         [Required]
         [Display(Name = "Release Date")]
@@ -28,7 +28,7 @@ namespace Vidly2.ViewModels
         [Required]
         [Display(Name = "Number in Stock")]
         [Range(1,20)]
-        public int NumberInStock { get; set; }
+        public int? NumberInStock { get; set; }
 
         public string Title
         {
