@@ -38,7 +38,7 @@ namespace Vidly2.Controllers
             var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
-            { 
+            {
                 return HttpNotFound();
             }
 
@@ -53,14 +53,26 @@ namespace Vidly2.Controllers
             {
                 Genres = genres
             };
-            
+
             return View("MovieForm", viewModel);
 
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View("MovieForm",
+                    new MovieFormViewModel(movie)
+                    {
+                        Genres = _context.Genres.ToList()
+                    });
+            }
+
+
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;
@@ -75,8 +87,11 @@ namespace Vidly2.Controllers
                 movieInDb.NumberInStock = movie.NumberInStock;
             }
 
+            
                 _context.SaveChanges();
             
+            
+
             return RedirectToAction("Index", "Movies");
         }
 
@@ -88,40 +103,13 @@ namespace Vidly2.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new MovieFormViewModel
+            var viewModel = new MovieFormViewModel(movie)
             {
-                Genres = _context.Genres.ToList(),
-                Movie = movie
+                Genres = _context.Genres.ToList()
             };
 
             return View("MovieForm", viewModel);
         }
 
-
-        // GET: Movies
-        public ActionResult Random()
-        {
-
-            var movie = new Movie()
-            {
-                Name = "Shrek"
-            };
-
-            var customers = new List<Customer>()
-            {
-                new Customer { Name = "Alan"},
-                new Customer { Name = "Susan"},
-                new Customer { Name = "George"}
-            };
-
-            var viewModel = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(viewModel);
-        }
-
     }
-} 
+}
