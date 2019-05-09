@@ -77,11 +77,9 @@ namespace Vidly2.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            //implement automapper later
-            customerInDb.Name = customerDto.Name;
-            customerInDb.BirthDate = customerDto.BirthDate;
-            customerInDb.IsSubscribedToNewsletter = customerDto.IsSubscribedToNewsletter;
-            customerInDb.MembershipTypeId = customerDto.MembershipTypeId;
+            // compiler decides of the types based on the object types passed to the method
+            // so .Map<CustomerDto, Customer>( ... ) can be simplified
+            Mapper.Map(customerDto, customerInDb);
 
             _context.SaveChanges();
         }
