@@ -17,19 +17,19 @@
     </thead>
     <tbody>
         @*@foreach (var customer in Model) // no longer rendering customers on the server
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)
-                </td>
-                <td>
-                    @customer.MembershipType.Name
-                </td>
-                <td>
-                    <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
-                </td>
-            </tr>
-        }*@
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)
+                    </td>
+                    <td>
+                        @customer.MembershipType.Name
+                    </td>
+                    <td>
+                        <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }*@
     </tbody>
 </table>
 
@@ -40,7 +40,10 @@
         $(document).ready(function () {
             // adding a reference to the customers table and calling .DataTable() function
             // loading customers from /api/customers/
-            $("#customers").DataTable({ // 1. param object
+
+
+            //$("#customers").DataTable({ 
+            var table = $("#customers").DataTable({ // object as a parameter for DataTable()
                 ajax: { // property of param obj
                     url: "/api/customers", // url to the api
                     dataSrc: "" // data source property
@@ -62,7 +65,7 @@
                                 + data + " >Delete</button>";
                         }
                     }
-                ] 
+                ]
 
             });
 
@@ -81,7 +84,13 @@
                                     url: "/api/customers/" + button.attr("data-customer-id"),
                                     method: "DELETE",
                                     success: function () {
-                                        button.parents("tr").remove();
+                                        // fixing bug removed item stil searchable
+                                        table // reference to the customers table
+                                            .row(button.parents("tr")) // select row by selector
+                                            .remove() // deletes the customer from the internal list in datatable
+                                            .draw(); // redraws the table
+
+                                        // button.parents("tr").remove();
                                     }
 
                                 });
