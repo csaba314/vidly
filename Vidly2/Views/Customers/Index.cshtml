@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.ActionLink("NEW", "New", "Customers", new { @class="btn btn-primary"})
+@Html.ActionLink("NEW", "New", "Customers", new { @class = "btn btn-primary" })
 
 <table id="customers" class="table table-bordered table-hover">
     <thead>
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var customer in Model)
+        @*@foreach (var customer in Model) // no longer rendering customers on the server
         {
             <tr>
                 <td>
@@ -29,7 +29,7 @@
                     <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
                 </td>
             </tr>
-        }
+        }*@
     </tbody>
 </table>
 
@@ -38,64 +38,92 @@
     <script>
 
         $(document).ready(function () {
+            // adding a reference to the customers table and calling .DataTable() function
+            // loading customers from /api/customers/
+            $("#customers").DataTable({ // 1. param object
+                ajax: { // property of param obj
+                    url: "/api/customers", // url to the api
+                    dataSrc: "" // data source property
+                },
+                columns: [// property - array of objects
+                    { // first column
+                        data: "name", // data property set to the name property of json obj sent by the api
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+                    { // second column
+                        data: "name"
+                    },
+                    { // third column
+                        data: "id",
+                        render: function (data) {
+                            return "<button class= 'btn-link js-delete' data-customer-id="
+                                + data + " >Delete</button>";
+                        }
+                    }
+                ] 
+
+            });
+
 
             // optimizing - only one event is raised for all items in the table id="customers"
             $("#customers")
                 // if click event (1. param) is raised from element maching the selector (2. param)
                 // callback function (3. param) is called
                 .on("click", ".js-delete", function () {
-                var button = $(this); // getting the reference of the button
+                    var button = $(this); // getting the reference of the button
 
-                bootbox.confirm("Are you sure you want to delete this customer?",
-                    function (result){
-                        if (result) {
-                            $.ajax({
-                                url: "/api/customers/" + button.attr("data-customer-id"),
-                                method: "DELETE",
-                                success: function () {
-                                    button.parents("tr").remove();
-                                }
+                    bootbox.confirm("Are you sure you want to delete this customer?",
+                        function (result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/customers/" + button.attr("data-customer-id"),
+                                    method: "DELETE",
+                                    success: function () {
+                                        button.parents("tr").remove();
+                                    }
 
-                            });
-                        }
-                    });
-
-
-                /*
-                 * // bootbox implementation
-                var button = $(this); // getting the reference of the button
-
-                bootbox.confirm("Are you sure you want to delete this customer?",
-                    function (result) {
-                        if (result) {
-                            $.ajax({
-                                url: "/api/customers/" + button.attr("data-customer-id"),
-                                method: "DELETE",
-                                success: function () {
-                                    button.parents("tr").remove();
-                                }
-
-                            });
-                        }
-                    });
-                    */
+                                });
+                            }
+                        });
 
 
-                //if (confirm("Are you sure you want to delete this customer?")) {
-                //    $.ajax({
-                //        url: "/api/customers/" + button.attr("data-customer-id"),
-                //        method: "DELETE",
-                //        success: function () {
-                //            //console.log("Success");
-                //            button.parents("tr") // Description: Get the ancestors of each element in the current set of matched elements
-                //                .remove(); //
-                //        }
-                //    });
-                //}
-            });
+                    /*
+                     * // bootbox implementation
+                    var button = $(this); // getting the reference of the button
+
+                    bootbox.confirm("Are you sure you want to delete this customer?",
+                        function (result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/customers/" + button.attr("data-customer-id"),
+                                    method: "DELETE",
+                                    success: function () {
+                                        button.parents("tr").remove();
+                                    }
+
+                                });
+                            }
+                        });
+                        */
+
+
+                    //if (confirm("Are you sure you want to delete this customer?")) {
+                    //    $.ajax({
+                    //        url: "/api/customers/" + button.attr("data-customer-id"),
+                    //        method: "DELETE",
+                    //        success: function () {
+                    //            //console.log("Success");
+                    //            button.parents("tr") // Description: Get the ancestors of each element in the current set of matched elements
+                    //                .remove(); //
+                    //        }
+                    //    });
+                    //}
+                });
         });
 
     </script>
-    
-    
-    }
+
+
+}

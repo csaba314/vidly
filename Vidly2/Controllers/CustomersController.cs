@@ -91,10 +91,10 @@ namespace Vidly2.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            return View(customers);
+            // customers loading from the api, list of customers no longer needed
+            //var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            //return View(customers);
+            return View();
         }
 
         public ActionResult Details(int id)
