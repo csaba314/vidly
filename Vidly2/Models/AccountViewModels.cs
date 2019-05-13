@@ -8,6 +8,12 @@ namespace Vidly2.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        // add DrivingLicence prop to the ExternalLoginConfirmatioViewModel 
+        // so external authentication does not fail
+        [Required]
+        [Display(Name = "Driving License")]
+        public string DrivingLicense { get; set; }
     }
 
     public class ExternalLoginListViewModel
