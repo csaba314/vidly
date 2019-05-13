@@ -33,7 +33,7 @@ namespace Vidly2.Controllers
 
 
             // check if the user is on a role
-            if (User.IsInRole("CanManageMovies"))
+            if (User.IsInRole(RoleName.CanManageMovies))
             {   // if user is in "CanEditMovies" role send him to the List with edit permissions
                 return View("List");
             }
@@ -57,7 +57,7 @@ namespace Vidly2.Controllers
 
         // add a authorize attribute to limit the usage of New() action to certain roles
         // this will override the global autorize filter
-        [Authorize(Roles = "CanManageMovies")]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
@@ -73,7 +73,7 @@ namespace Vidly2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "CanManageMovies")]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
 
@@ -101,14 +101,13 @@ namespace Vidly2.Controllers
                 movieInDb.NumberInStock = movie.NumberInStock;
             }
 
-
             _context.SaveChanges();
-
-
 
             return RedirectToAction("Index", "Movies");
         }
 
+        
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
