@@ -46,7 +46,7 @@
     <script>
         $(document).ready(function () {
             // 2. create a local var to the table and add the DataTable plug-in
-            var table = $("#movies").DataTable({
+            var moviesTable = $("#movies").DataTable({
                 ajax: { // 3. add ajax source to grab the data from the api
                     url: "/api/movies", // url to the api
                     method: "GET", // method type, optional if method = GET
@@ -77,7 +77,7 @@
 
 
 
-            $("#movies").on("click", // 1. param - click event
+            moviesTable.on("click", // 1. param - click event
                 ".js-delete", // 2. param - filter based on what the event will trigger
                 function () { // 3. param - callback function
                     var currentButton = $(this); // creating a reference to the button
@@ -85,14 +85,26 @@
                         + currentButton.attr("data-movie-name") + "\"?"), // 1. param - string displayed to user
                         function (result) { // 2. param callback function with result(bool) param
                             if (result) {
-                                alert("Successful deletion of movie: \"" + currentButton.attr("data-movie-name")+"\"");
+                                // alert("Successful deletion of movie: \"" + currentButton.attr("data-movie-name")+"\"");
+                                $.ajax({ // calling $.ajax() method to connect to delete api
+                                    url: ("/api/movies/" + currentButton.attr("data-movie-id")),
+                                    method: "DELETE",
+                                    success: function () {
+
+                                        // select the row to be deleted using the selector
+                                        // select buttons parrents for deletion
+                                        moviesTable.row(currentButton.parents("tr"))
+                                        .remove().draw();
+                                        /*
+                                        currentButton.parents("tr") // select the paretns of the element to be deleted
+                                            .remove() // remove the row from the list
+                                            .draw(); // redraws the list
+                                            */
+                                    }
+                                });
                             }
-
                         });
-
-
                 });
-
         });
     </script>
 }
