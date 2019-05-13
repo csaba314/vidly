@@ -11,7 +11,8 @@
 
 <br /><br />
 
-<table class="table table-hover table-bordered">
+@* 1. add id="movies" to table *@
+<table id="movies" class="table table-hover table-bordered">
     <thead>
         <tr>
             <th>Movie Name</th>
@@ -36,5 +37,21 @@
     </tbody>
     
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            // 2. create a local var to the table and add the DataTable plug-in
+            var table = $("#movies").DataTable();
+
+        });
+
+
+
+    </script>
+
+    
+    }
 
 
