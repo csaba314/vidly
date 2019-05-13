@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Vidly2.Dtos;
 
 namespace Vidly2.Dtos
 {
@@ -29,6 +30,7 @@ namespace Vidly2.Dtos
         [Range(1,20)]
         public int NumberInStock { get; set; }
 
+        public GenreDto Genre { get; set; }
 
     }
 }
