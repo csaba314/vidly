@@ -21,7 +21,9 @@
 
     </thead>        
     <tbody>
-        @foreach (var movie in Model)
+
+        @* 3. remove foreach, no longer needed since movies are rendered by DataTable using /api/movies/*@
+        @*@foreach (var movie in Model) 
         {
         <tr>
             <td>
@@ -31,7 +33,7 @@
                 @movie.Genre.Name
             </td>
         </tr>
-        }
+        }*@
 
 
     </tbody>
@@ -43,15 +45,32 @@
     <script>
         $(document).ready(function () {
             // 2. create a local var to the table and add the DataTable plug-in
-            var table = $("#movies").DataTable();
+            var table = $("#movies").DataTable({
+                ajax: { // 3. add ajax source to grab the data from the api
+                    url: "/api/movies", // url to the api
+                    method: "GET", // method type, optional if method = GET
+                    dataSrc: ""
+                },
+                columns: [ // columns parameter takes an array of objects
+                    { // 1. column Display list of names with links to movies/edit
+                        data: "name", // data property set to the name property of json obj sent by the api
+                        render: function (data, type, movie) {
+                            return "<a href='/movies/edit/" + movie.id + "'>" + data + "</a>";
+                        }
+                    },
+                    { // 2. column display movie genre
+                        data: "genreId"
+                    }
+
+
+                ]
+            });
 
         });
 
 
 
     </script>
-
-    
     }
 
 
