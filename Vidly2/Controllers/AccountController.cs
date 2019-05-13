@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Vidly2.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Vidly2.Controllers
 {
@@ -155,15 +156,48 @@ namespace Vidly2.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    /*
+                    #1 register a guest user using a register form in the app
+                    email: guest @vidly.com
+                    pass: GuestP@ss123
+
+                    #2 insert temp code
+                    
+
+                    // Temp code START: 
+                    // add "using Microsoft.AspNet.Identity.EntityFramework;" for built in IdentityRole class
+                    // add a reference to roleStore to be passed as a parameter to RoleManager constructor
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+
+                    // add reference roleManager and pass roleStore to the constructor
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    // create a role by calling .CreateAsync() and passing a new IdentityRole("NewRoleName")
+                    // "NewRoleName" - convention is to name roles by permissions they  have
+                    await roleManager.CreateAsync(new IdentityRole("CanManageMovies"));
+
+                    // assign role to the new user .AddToRoleAsync(userId, "NameOfTheRole")
+                    await UserManager.AddToRoleAsync(user.Id, "CanManageMovies");
+                    // Temp code END
+                    
+                    // #3 register a admin user
+                    // email: admin@vidly.com
+                    // pass: AdminP@ss456
+
+                    // #4 REMOVE TEMP CODE
+                    // #5 add-migration to seed new users to database
+                     */
+
+
                     // automatic sign-in for new registered users - default
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // uncomment to enable email confirmation 
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
                     return RedirectToAction("Index", "Home");

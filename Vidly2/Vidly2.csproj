@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201905051737082_updateMembershipTypeData1.Designer.cs">
       <DependentUpon>201905051737082_updateMembershipTypeData1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905131125577_SeedUsers.cs" />
+    <Compile Include="Migrations\201905131125577_SeedUsers.Designer.cs">
+      <DependentUpon>201905131125577_SeedUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -557,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905051737082_updateMembershipTypeData1.resx">
       <DependentUpon>201905051737082_updateMembershipTypeData1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905131125577_SeedUsers.resx">
+      <DependentUpon>201905131125577_SeedUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
