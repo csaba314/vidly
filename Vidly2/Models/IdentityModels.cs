@@ -12,10 +12,11 @@ namespace Vidly2.Models
     {
 
         // adding a new property to application user (registered user)
+        
 
-        [Required]
+        [Required] // since we have users in db, this new prop will be set to empty string by Entity Framework
         [StringLength(255)]
-        public string DrivingLicence { get; set; }
+        public string DrivingLicense { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

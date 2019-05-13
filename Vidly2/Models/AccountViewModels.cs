@@ -79,6 +79,12 @@ namespace Vidly2.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        // add DrivingLicence prop to the RegisterViewModel so we can use it in the register form
+        [Required]
+        [Display(Name = "Driving License")]
+        public string DrivingLicense { get; set; }
+
     }
 
     public class ResetPasswordViewModel
