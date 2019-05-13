@@ -8,6 +8,8 @@ namespace Vidly2
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            // adding a global [Authorize] atribute
+            filters.Add(new AuthorizeAttribute());
         }
     }
 }
