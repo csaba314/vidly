@@ -7,7 +7,7 @@
 <h2>Movies</h2>
 
 
-@Html.ActionLink("NEW MOVIE", "New", "Movies", new { @class="btn btn-primary"})
+@Html.ActionLink("NEW MOVIE", "New", "Movies", new { @class = "btn btn-primary" })
 
 <br /><br />
 
@@ -20,25 +20,25 @@
             <th>Delete</th>
         </tr>
 
-    </thead>        
+    </thead>
     <tbody>
 
         @* 3. remove foreach, no longer needed since movies are rendered by DataTable using /api/movies/*@
-        @*@foreach (var movie in Model) 
-        {
-        <tr>
-            <td>
-                @Html.ActionLink(@movie.Name, "Edit", "Movies", new { id = movie.Id }, null)
-            </td>
-            <td>
-                @movie.Genre.Name
-            </td>
-        </tr>
-        }*@
+        @*@foreach (var movie in Model)
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(@movie.Name, "Edit", "Movies", new { id = movie.Id }, null)
+                </td>
+                <td>
+                    @movie.Genre.Name
+                </td>
+            </tr>
+            }*@
 
 
     </tbody>
-    
+
 </table>
 
 @section scripts
@@ -63,11 +63,11 @@
                         data: "genre.name"
                     },
                     { // 3. column Delete button
-                        data: "id",
-                        render: function (data) {
-                            return "<button class='btn btn-link js-delete' data-movie-id='"
+                        data: "id", // select id property for data so it can be provided in the button
+                        render: function (data, type, row) { // rendering the button
+                            return "<button class='btn btn-primary js-delete' data-movie-id='"
                                 + data
-                                + "'>Delete</button>";
+                                + "' data-movie-name='" + row.name + "' >Delete</button>";
                         }
                     }
 
@@ -75,11 +75,26 @@
                 ]
             });
 
+
+
+            $("#movies").on("click", // 1. param - click event
+                ".js-delete", // 2. param - filter based on what the event will trigger
+                function () { // 3. param - callback function
+                    var currentButton = $(this); // creating a reference to the button
+                    bootbox.confirm(("Are you sure you want to delete movie: \"" // unsing bootbox to confirm deletion
+                        + currentButton.attr("data-movie-name") + "\"?"), // 1. param - string displayed to user
+                        function (result) { // 2. param callback function with result(bool) param
+                            if (result) {
+                                alert("Successful deletion of movie: \"" + currentButton.attr("data-movie-name")+"\"");
+                            }
+
+                        });
+
+
+                });
+
         });
-
-
-
     </script>
-    }
+}
 
 
