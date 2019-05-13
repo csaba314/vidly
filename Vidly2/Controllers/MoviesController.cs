@@ -30,7 +30,17 @@ namespace Vidly2.Controllers
             // movies table is rendered by DataTable using the api so no longer needed to provide a list
             // var movies = _context.Movies.Include(m => m.Genre).ToList();
             //return View(movies);
-            return View();
+
+
+            // check if the user is on a role
+            if (User.IsInRole("CanManageMovies"))
+            {   // if user is in "CanEditMovies" role send him to the List with edit permissions
+                return View("List");
+            }
+
+            // if user is not in "CanEditMovies" role send him to the read only list
+            return View("ReadOnlyList");
+
         }
 
         public ActionResult Details(int id)
@@ -45,6 +55,9 @@ namespace Vidly2.Controllers
             return View(movie);
         }
 
+        // add a authorize attribute to limit the usage of New() action to certain roles
+        // this will override the global autorize filter
+        [Authorize(Roles = "CanManageMovies")]
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
@@ -87,10 +100,10 @@ namespace Vidly2.Controllers
                 movieInDb.NumberInStock = movie.NumberInStock;
             }
 
-            
-                _context.SaveChanges();
-            
-            
+
+            _context.SaveChanges();
+
+
 
             return RedirectToAction("Index", "Movies");
         }

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Vidly2.Models.Movie>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movies</h2>
+
+
+
+
+<table id="movies" class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Movie Name</th>
+            <th>Genre</th>
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @* 3. remove foreach, no longer needed since movies are rendered by DataTable using /api/movies/*@
+        @*@foreach (var movie in Model)
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(@movie.Name, "Edit", "Movies", new { id = movie.Id }, null)
+                </td>
+                <td>
+                    @movie.Genre.Name
+                </td>
+            </tr>
+            }*@
+
+
+    </tbody>
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            // 2. create a local var to the table and add the DataTable plug-in
+            var moviesTable = $("#movies").DataTable({
+                ajax: { // 3. add ajax source to grab the data from the api
+                    url: "/api/movies", // url to the api
+                    method: "GET", // method type, optional if method = GET
+                    dataSrc: ""
+                },
+                columns: [ // columns parameter takes an array of objects
+                    { // 1. column Display list of names with links to movies/edit
+                        data: "name" // data property set to the name property of json obj sent by the api
+                        
+                    },
+                    { // 2. column display movie genre
+                        data: "genre.name"
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
+
