@@ -17,6 +17,7 @@
         <tr>
             <th>Movie Name</th>
             <th>Genre</th>
+            <th>Delete</th>
         </tr>
 
     </thead>        
@@ -60,6 +61,14 @@
                     },
                     { // 2. column display movie genre
                         data: "genre.name"
+                    },
+                    { // 3. column Delete button
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn btn-link js-delete' data-movie-id='"
+                                + data
+                                + "'>Delete</button>";
+                        }
                     }
 
 
