@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace Vidly2.Controllers
 {
+    // To allow anonymous users to access homepage add [AllowAnonymous] attribute to the controller
+    // or to any action we want to allow anonym to visit
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()
