@@ -73,6 +73,7 @@ namespace Vidly2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "CanManageMovies")]
         public ActionResult Save(Movie movie)
         {
 
