@@ -155,7 +155,10 @@ namespace Vidly2.Controllers
                 var user = new ApplicationUser {
                     UserName = model.Email,
                     Email = model.Email,
-                    DrivingLicense = model.DrivingLicense
+                    DrivingLicense = model.DrivingLicense,
+                    // initialize new property to ApplicationUser creation
+                    Phone = model.Phone
+                    
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -412,7 +415,9 @@ namespace Vidly2.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     // initialize DrivingLicense param on new user creation
-                    DrivingLicense = model.DrivingLicense
+                    DrivingLicense = model.DrivingLicense,
+                    // initialize Phone param on ApplicationUser creation
+                    Phone = model.Phone
                 };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
