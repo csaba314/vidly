@@ -29,7 +29,14 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
-    @* add a label and a textBox for the new property *@
+    @* add a label and a textBox for DrivingLicense *@
+    <div class="form-group">
+        @Html.LabelFor(m => m.DrivingLicense, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DrivingLicense, new { @class = "form-control" })
+        </div>
+    </div>
+    @* add a label and a textBox for Phone *@
     <div class="form-group">
         @Html.LabelFor(m => m.DrivingLicense, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
