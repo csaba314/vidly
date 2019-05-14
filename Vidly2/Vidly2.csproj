@@ -259,6 +259,10 @@
     <Compile Include="Migrations\201905131341323_SpellingCorrection.Designer.cs">
       <DependentUpon>201905131341323_SpellingCorrection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905140734286_AddingPhonePropertyToApplicationUser.cs" />
+    <Compile Include="Migrations\201905140734286_AddingPhonePropertyToApplicationUser.Designer.cs">
+      <DependentUpon>201905140734286_AddingPhonePropertyToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -581,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905131341323_SpellingCorrection.resx">
       <DependentUpon>201905131341323_SpellingCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905140734286_AddingPhonePropertyToApplicationUser.resx">
+      <DependentUpon>201905140734286_AddingPhonePropertyToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
