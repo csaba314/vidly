@@ -22,10 +22,19 @@ namespace Vidly2.Controllers.Api
 
 
         // GET  /api/customers
-        public IHttpActionResult GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            var customerDtos =  _context.Customers
-                .Include(c=> c.MembershipType)
+            // querying the db
+            var customersQuery = _context.Customers.Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+            { // if the query optional parameter is not null or whitespace
+                // modify the query to filter out the records that do not contain the query string
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+            }
+
+            // assigning filtered query object to the DTO
+            var customerDtos =  customersQuery
                 .ToList()
                 .Select(Mapper.Map<Customer, CustomerDto>);
 
