@@ -13,7 +13,8 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input type="text" value="" data-rule-validCustomer="true" @*custom attribute for custom validation*@
+            <input type="text" value="" name="customer" @*name attribute is required for jquery validation*@
+                   data-rule-validCustomer="true" @*custom attribute for custom validation*@
                    required id="customer" class="form-control" />
         </div>
     </div>
@@ -21,7 +22,7 @@
     <div class="form-group">
         <label>Movie</label>
         <div class="tt-container">
-            <input type="text" value="" id="movie" class="form-control" />
+            <input type="text" name="movie" value="" data-rule-atLeastOneMovie="true" id="movie" class="form-control" />
         </div>
     </div>
 
@@ -93,16 +94,21 @@
                     vm.movieIds.push(movie.id); // add the movie id to the vm property
                 });
 
-            // adding a custom validator
-            $.validator.addMethod("validCustomer", // name
-                function () {
+            // adding a custom validator for customer name
+            $.validator.addMethod("validCustomer", // 1. param validator name
+                function () {                       // 2. param
                     return vm.customerId && vm.customerId !== 0;
-                }, "Please select a valid customer"); // custom error message
+                }, "Please select a valid customer"); // 3. param custom error message
 
-            $("#newRental").validate({ // configuration obj for validate function
+            // adding custom validator for at least one movie selected
+            $.validator.addMethod("atLeastOneMovie",
+                function () {
+                    return vm.movieIds.length > 0;
+                }, "Please add at least one movie");
+
+
+            var validator = $("#newRental").validate({ // configuration obj for validate function
                 submitHandler: function () {
-                    e.preventDefault(); // prevents the form to be submited
-
                     $.ajax({
                         url: "/api/newRentals",
                         method: "post",
@@ -110,10 +116,22 @@
                     })
                         .done(function () {
                             toastr.success("Rentals successfully recorded");
+
+                            $("#customer").typeahead("val", ""); // clears the customer imput field
+                            $("#movie").typeahead("val", ""); // clears the movie imput field
+                            $("#movies").empty(); // clears the movies <ul>
+
+                            vm = { // resseting the viewModel object
+                                movieIds: []
+                            };
+
+                            validator.resetForm();
                         })
                         .fail(function () {
                             toastr.error("Something went wrong");
                         });
+
+                    return false;
                 }
 
             });
