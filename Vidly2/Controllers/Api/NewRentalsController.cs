@@ -22,7 +22,19 @@ namespace Vidly2.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
         {
-            var customer = _context.Customers.Single(c => c.Id == newRental.CustomerId);
+            // check if there are movie ids present
+            if (newRental.MovieIds.Count == 0)
+            {
+                return BadRequest("No Movie Ids have been given");
+            }
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == newRental.CustomerId);
+
+            // check if customerId is valid
+            if (customer == null)
+            {
+                return BadRequest("CustomerId is not valid");
+            }
 
             var movies = new List<Movie>();
 
@@ -34,12 +46,18 @@ namespace Vidly2.Controllers.Api
                 }
             }
 
+            // check if one or more movie ids are invalid
+            if (movies.Count != newRental.MovieIds.Count)
+            {
+                return BadRequest("One or more MovieIds are invalid");
+            }
+
             foreach (var movie in movies)
             {
+                // check if the movie is available
                 if (movie.NumberAvailable == 0)
                 {
                     return BadRequest("Movie is not available");
-
                 }
 
                 movie.NumberAvailable--;
