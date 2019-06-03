@@ -16,7 +16,10 @@ namespace Vidly2
                         "~/Scripts/datatables/datatables.bootstrap.js",
 
                         // Install-Package Twitter.Typeahead
-                        "~/Scripts/typeahead.bundle.js"
+                        "~/Scripts/typeahead.bundle.js",
+
+                        // Install-Package toastr
+                        "~/Scripts/toastr.js"
                         )); 
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -35,7 +38,8 @@ namespace Vidly2
                       "~/Content/bootstrap.css",
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/typeahead.css"
+                      "~/Content/typeahead.css",
+                      "~/content/toastr.css"
                       ));
         }
     }
