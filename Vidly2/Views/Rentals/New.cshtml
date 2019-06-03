@@ -8,7 +8,7 @@
 
 <h2>New Rental Form</h2>
 
-<form>
+<form id="newRental">
 
     <div class="form-group">
         <label>Customer</label>
@@ -38,7 +38,7 @@
     <script>
         $(document).ready(function () {
 
-            var vm = {
+            var vm = { // viewModel where we store form data and send back to the api
                 movieIds: [] // property to store movie Ids
             };
 
@@ -85,8 +85,24 @@
                     $("#movie").typeahead("val", ""); //clear the textbox after the movie is added to the list
 
                     vm.movieIds.push(movie.id); // add the movie id to the vm property
-                }
-                );
+                });
+
+
+            $("#newRental").submit(function (e) {
+                e.preventDefault(); // prevents the form to be submited 
+
+                $.ajax({
+                    url: "/api/newRentals",
+                    method: "post",
+                    data: vm
+                })
+                    .done(function () {
+                        console.log("done");
+                    })
+                    .fail(function () {
+
+                    });
+            });
 
         });
 
