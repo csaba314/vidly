@@ -13,7 +13,7 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input type="text" value="" id="customer" class="form-control" />
+            <input type="text" value="" required id="customer" class="form-control" />
         </div>
     </div>
 
@@ -35,6 +35,11 @@
 </form>
 
 @section scripts{
+
+    @*adding client side validation #1 *@
+    
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script>
         $(document).ready(function () {
 
@@ -87,9 +92,28 @@
                     vm.movieIds.push(movie.id); // add the movie id to the vm property
                 });
 
+            $("#newRental").validate({ // configuration obj for validate function
+                submitHandler: function () {
+                    e.preventDefault(); // prevents the form to be submited
 
+                    $.ajax({
+                        url: "/api/newRentals",
+                        method: "post",
+                        data: vm
+                    })
+                        .done(function () {
+                            toastr.success("Rentals successfully recorded");
+                        })
+                        .fail(function () {
+                            toastr.error("Something went wrong");
+                        });
+                }
+
+            });
+
+            /* code without clientside validation
             $("#newRental").submit(function (e) {
-                e.preventDefault(); // prevents the form to be submited 
+                e.preventDefault(); // prevents the form to be submited
 
                 $.ajax({
                     url: "/api/newRentals",
@@ -103,6 +127,7 @@
                         toastr.error("Something went wrong");
                     });
             });
+            */
 
         });
 
