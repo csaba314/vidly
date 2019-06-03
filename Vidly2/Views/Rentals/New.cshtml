@@ -13,7 +13,8 @@
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
-            <input type="text" value="" required id="customer" class="form-control" />
+            <input type="text" value="" data-rule-validCustomer="true" @*custom attribute for custom validation*@
+                   required id="customer" class="form-control" />
         </div>
     </div>
 
@@ -91,6 +92,12 @@
 
                     vm.movieIds.push(movie.id); // add the movie id to the vm property
                 });
+
+            // adding a custom validator
+            $.validator.addMethod("validCustomer", // name
+                function () {
+                    return vm.customerId && vm.customerId !== 0;
+                }, "Please select a valid customer"); // custom error message
 
             $("#newRental").validate({ // configuration obj for validate function
                 submitHandler: function () {
